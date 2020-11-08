@@ -6,9 +6,9 @@
 
 ```
 [task_local]
-1 10 * * * wfw.js, tag=微服务打卡, enabled=true
+1 10 * * * https://raw.githubusercontent.com/oOopc/script/main/wfw.js, tag=微服务打卡, enabled=true
 [rewrite_local]
-https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body wfw.js
+https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body https://raw.githubusercontent.com/oOopc/script/main/wfw.js
 [mitm]
 hostname = wfw.scu.edu.cn
 ```

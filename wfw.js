@@ -1,12 +1,11 @@
 /***********************************
 微服务健康打卡脚本
-更新时间: 2020 11 7
 
 【QX 使用说明】
 [task_local]
-1 10 * * * wfw.js, tag=微服务打卡, enabled=true
+1 10 * * * https://raw.githubusercontent.com/oOopc/script/main/wfw.js, tag=微服务打卡, enabled=true
 [rewrite_local]
-https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body wfw.js
+https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body https://raw.githubusercontent.com/oOopc/script/main/wfw.js
 [mitm]
 hostname = wfw.scu.edu.cn
 
@@ -14,13 +13,13 @@ hostname = wfw.scu.edu.cn
 
 const $ = API("微服务打卡");
 
-let cookies = [],
-  bodies = [],
-  msgs = "";
-cookies.push($.read("cookies"));
-bodies.push($.read("bodies"));
+let msgs = "",
+  uids = [];
+if ($.read("uids")) uids.push(...$.read("uids"));
 const date = new Date();
-const today = "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+const today =
+  "date=" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+const now = "created=" + Math.round(date.getTime() / 1000);
 let headers = {
   "X-Requested-With": `XMLHttpRequest`,
   Connection: `keep-alive`,
@@ -39,15 +38,15 @@ if ((isGetCookie = typeof $request != `undefined`)) {
   $.done({});
 } else {
   !(async () => {
-    if (!cookies[0]) {
+    if (!uids) {
       $.notify($.name, "🔔 请先获取 Cookie!");
       return;
     }
-    console.log(`${$.name} 共 ${cookies.length} 个账号\n`);
-    for (let i = 0; i < cookies.length; i++) {
-      if (cookies[i]) {
-        cookie = cookies[i];
-        body = bodies[i];
+    console.log(`${$.name} 共 ${uids.length} 个账号\n`);
+    for (let i = 0; i < uids.length; i++) {
+      if (uids[i]) {
+        cookie = $.read(uids[i] + "ck");
+        body = $.read(uids[i] + "bd");
         const msg = await checkIn();
         msgs += (msg == "操作成功" ? "🥳 " : "🤨 ") + msg + "\n";
       }
@@ -70,10 +69,18 @@ function getCookieBody() {
   ) {
     const cookie = $request.headers["Cookie"];
     const body = $request.body;
-    $.write(cookie, "cookies");
-    $.write(body, "bodies");
-    $.notify($.name, "🎊 Cookie & Body 写入成功");
-    $.done();
+    const uid = /uid=\d+(?=&)/.exec(body)[0];
+    if (!uids.includes(uid)) {
+      uids.push(uid);
+      $.write(uids, "uids");
+      $.write(cookie, uid + "ck");
+      $.write(body, uid + "bd");
+      $.notify($.name, `🎊 用户${uid}写入成功`);
+    } else {
+      $.write(cookie, uid + "ck");
+      $.write(body, uid + "bd");
+      $.notify($.name, `🎊 用户${uid}更新成功`);
+    }
   }
 }
 
@@ -81,6 +88,7 @@ function checkIn() {
   const url = `https://wfw.scu.edu.cn/ncov/wap/default/save`;
   headers["Cookie"] = cookie;
   body.replace(/date=\d+(?=&)/, today);
+  body.replace(/created=\d+(?=&)/, now);
   let myRequest = {
     url: url,
     headers: headers,
