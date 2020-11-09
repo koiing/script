@@ -23,7 +23,7 @@ const now = "created=" + Math.round(date.getTime() / 1000);
 let headers = {
   "X-Requested-With": `XMLHttpRequest`,
   Connection: `keep-alive`,
-  "Accept-Encoding": `gzip, deflate, br`,
+  "Accept-Encoding": `identity`,
   "Content-Type": `application/x-www-form-urlencoded; charset=UTF-8`,
   Origin: `https://wfw.scu.edu.cn`,
   "User-Agent": `Mozilla/5.0 (iPad; CPU OS 14_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.18(0x17001226) NetType/WIFI Language/zh_CN`,
@@ -38,19 +38,30 @@ if ((isGetCookie = typeof $request != `undefined`)) {
   $.done({});
 } else {
   !(async () => {
-    if (!uids) {
+    if (!uids[0]) {
       $.notify($.name, "🔔 请先获取 Cookie!");
       return;
     }
-    console.log(`${$.name} 共 ${uids.length} 个账号\n`);
+    console.log(`${$.name}, 共 ${uids.length} 个账号\n`);
     for (let i = 0; i < uids.length; i++) {
       if (uids[i]) {
         cookie = $.read(uids[i] + "ck");
         body = $.read(uids[i] + "bd");
+        // console.log(uids[i]);
+        // console.log(cookie);
+        // console.log(body);
         const msg = await checkIn();
-        msgs += (msg == "操作成功" ? "🥳 " : "🤨 ") + msg + "\n";
+        msgs +=
+          (msg == "操作成功"
+            ? "🥳 "
+            : msg == "今天已经填报了"
+            ? "🧐 "
+            : "😩 ") +
+          msg +
+          "\n";
       }
     }
+    if (!$.env.isNode) console.log(msgs);
     $.notify($.name, "", msgs);
     $.done();
   })()
@@ -64,7 +75,7 @@ if ((isGetCookie = typeof $request != `undefined`)) {
 function getCookieBody() {
   if (
     $request &&
-    $request.method != "OPTIONS" &&
+    // $request.method != "OPTIONS" &&
     $request.url.match(/\/ncov\/wap\/default\/save/)
   ) {
     const cookie = $request.headers["Cookie"];

@@ -1,0 +1,19 @@
+{
+  "name": "wfw",
+  "version": "1.0.0",
+  "description": "微服务健康打卡脚本",
+  "main": "wfw.js",
+  "dependencies": {
+    "request": "^2.88.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@personal:oOopc/wfw.git"
+  },
+  "author": "oOopc",
+  "license": "ISC"
+}
