@@ -4,7 +4,9 @@
 
 ## QX 使用说明
 
-```
+添加如下配置:
+
+```text
 [task_local]
 1 10 * * * https://raw.githubusercontent.com/oOopc/script/main/wfw.js, tag=微服务打卡, enabled=true
 [rewrite_local]
@@ -13,15 +15,18 @@ https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body ht
 hostname = wfw.scu.edu.cn
 ```
 
+手动签到一次获取cookie后禁用重写即可.
+
 ## Node.js 使用说明
-初次运行 `node wfw.js` 生成 `微服务打卡.json`, 将抓包所得的 `cookie`、`body` 及其中的 `uid` 按下列格式填入即可.
+
+登录[微服务健康每日报](https://wfw.scu.edu.cn/ncov/wap/default/index)签到并抓包, 没抓过, 自己~抓吧~.
+`npm install`安装依赖, 初次运行 `node wfw.js` 生成 `微服务打卡.json`, 将抓包所得的 `cookie`、`body` 及其中的 `uid` 按下列格式填入, 配合cron或Task Scheduler自动打卡.
+
 ```json
 {
   "uids": ["uid=123456", "uid=654321"],
-  "uid=123456ck": "UUkey=...; eai-sess=...",
-  "uid=654321ck": "UUkey=...; eai-sess=...",
-  "uid=123456bd": "sfjxhsjc=1&...&uid=123456bd&...",
-  "uid=654321bd": "sfjxhsjc=1&...&uid=654321bd&...",
+  "wfwCookies": "{\"uid=123456\": \"UUkey=...; eai-sess=...\",\"uid=654321\": \"UUkey=...; eai-sess=...\"}",
+  "wfwBodies": "{\"uid=123456\": \"sfjxhsjc=1&...&uid=123456bd&...\",\"uid=654321\": \"sfjxhsjc=1&...&uid=654321bd&...\"}"
 }
 ```
 
