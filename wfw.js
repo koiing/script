@@ -13,9 +13,11 @@ hostname = wfw.scu.edu.cn
 
 const $ = API("微服务打卡");
 
-let msgs = "",
-  uids = [];
-if ($.read("uids")) uids.push(...$.read("uids"));
+let msgs = "";
+let uids = $.read("uids") ? $.read("uids") : [];
+let cookies = $.read("wfwCookies") ? JSON.parse($.read("wfwCookies")) : {};
+let bodies = $.read("wfwBodies") ? JSON.parse($.read("wfwBodies")) : {};
+
 const date = new Date();
 const today =
   "date=" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
@@ -42,14 +44,11 @@ if ((isGetCookie = typeof $request != `undefined`)) {
       $.notify($.name, "🔔 请先获取 Cookie!");
       return;
     }
-    console.log(`${$.name}, 共 ${uids.length} 个账号\n`);
-    for (let i = 0; i < uids.length; i++) {
-      if (uids[i]) {
-        cookie = $.read(uids[i] + "ck");
-        body = $.read(uids[i] + "bd");
-        // console.log(uids[i]);
-        // console.log(cookie);
-        // console.log(body);
+    msgs += `共 ${uids.length} 个账号\n`;
+    for (uid of uids) {
+      if (uid) {
+        cookie = cookies[uid];
+        body = bodies[uid];
         const msg = await checkIn();
         msgs +=
           (msg == "操作成功"
@@ -81,15 +80,21 @@ function getCookieBody() {
     const cookie = $request.headers["Cookie"];
     const body = $request.body;
     const uid = /uid=\d+(?=&)/.exec(body)[0];
+
+    cookies[uid] = cookie;
+    bodies[uid] = body;
+    cookies = JSON.stringify(cookies);
+    bodies = JSON.stringify(bodies);
+
     if (!uids.includes(uid)) {
       uids.push(uid);
       $.write(uids, "uids");
-      $.write(cookie, uid + "ck");
-      $.write(body, uid + "bd");
+      $.write(cookies, "wfwCookies");
+      $.write(bodies, "wfwBodies");
       $.notify($.name, `🎊 用户${uid}写入成功`);
     } else {
-      $.write(cookie, uid + "ck");
-      $.write(body, uid + "bd");
+      $.write(cookies, "wfwCookies");
+      $.write(bodies, "wfwBodies");
       $.notify($.name, `🎊 用户${uid}更新成功`);
     }
   }
