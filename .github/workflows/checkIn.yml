@@ -1,7 +1,13 @@
 name: 微服务健康打卡
 on:
+  workflow_dispatch:
+    inputs:
+      manual:
+        description: 手动运行任务
+        required: false
+        default: 开始!
   schedule:
-    - cron: "1 9 * * *"
+    - cron: "1 1 * * *"
 defaults:
   run:
     shell: bash
@@ -19,6 +25,14 @@ jobs:
       - uses: actions/setup-node@main
         with:
           node-version: ${{matrix.node}}
+      - name: Cache Node.js modules
+        uses: actions/cache@main
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+      - run: npm ci
       - run: echo "$Authorization" > 微服务打卡.json
-      - run: npm install
       - run: node wfw.js
