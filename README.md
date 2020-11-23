@@ -1,6 +1,6 @@
 # 微服务健康打卡
 
-微服务健康每日报自动打卡脚本, 支持多账号
+微服务健康每日报自动打卡脚本, 支持多账号.
 
 ## QX 使用说明
 
@@ -20,7 +20,7 @@ hostname = wfw.scu.edu.cn
 ## Node.js 使用说明
 
 登录[微服务健康每日报](https://wfw.scu.edu.cn/ncov/wap/default/index)签到并抓包, 没抓过, 自己~抓吧~.
-`npm install`安装依赖, 初次运行 `node wfw.js` 生成 `微服务打卡.json`, 将抓包所得的 `cookie`、`body` 及其中的 `uid` 按下列格式填入, 配合cron或Task Scheduler自动打卡.
+`npm install` 安装依赖, 初次运行 `node wfw.js` 生成 `微服务打卡.json`, 将抓包所得的 `cookie`、`body` 及其中的 `uid` 按下列格式填入, 配合cron或Task Scheduler自动打卡.
 
 ```json
 {
@@ -30,10 +30,14 @@ hostname = wfw.scu.edu.cn
 }
 ```
 
+### Github Actions
+
+`Fork`此项目, 在 `Settings` > `Secrets` > `New repository secret` 新建 secret, Name 为 `Authorization`, Value 为 `微服务打卡.json` 中内容. 创建完成后在 `Actions` 下手动运行一次检验是否成功.
+
 ## :man_technologist:TODO
 
 - [x] 适配 Node.js, ~~适配 Loon~~
-- [ ] 配置使用 Github Action 打卡
+- [x] 配置使用 Github Actions 打卡
 - [ ] 适配 BoxJs
 - [ ] 蹲一个 108×108 [icon](https://imgwfw.scu.edu.cn/image/9/45f3a5e666c9a86a403f7be373ad66cf.png)
 
