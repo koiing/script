@@ -1,0 +1,24 @@
+name: 微服务健康打卡
+on:
+  schedule:
+    - cron: "1 9 * * *"
+defaults:
+  run:
+    shell: bash
+jobs:
+  checkIn:
+    name: checkIn
+    runs-on: ubuntu-latest
+    env:
+      Authorization: ${{secrets.Authorization}}
+    strategy:
+      matrix:
+        node: [14.x]
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
+        with:
+          node-version: ${{matrix.node}}
+      - run: echo "$Authorization" > 微服务打卡.json
+      - run: npm install
+      - run: node wfw.js
