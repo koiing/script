@@ -17,6 +17,7 @@ let msgs = "";
 let uids = $.read("uids") ? $.read("uids") : [];
 let cookies = $.read("wfwCookies") ? JSON.parse($.read("wfwCookies")) : {};
 let bodies = $.read("wfwBodies") ? JSON.parse($.read("wfwBodies")) : {};
+const sckey = $.read("sckey") ? $.read("sckey") : "";
 
 const date = new Date();
 const today =
@@ -62,6 +63,7 @@ if ((isGetCookie = typeof $request != `undefined`)) {
     }
     if (!$.env.isNode) console.log(msgs);
     $.notify($.name, "", msgs);
+    if (sckey) weChatNotify();
     $.done();
   })()
     .catch((e) => {
@@ -103,8 +105,8 @@ function getCookieBody() {
 function checkIn() {
   const url = `https://wfw.scu.edu.cn/ncov/wap/default/save`;
   headers["Cookie"] = cookie;
-  body.replace(/date=\d+(?=&)/, today);
-  body.replace(/created=\d+(?=&)/, now);
+  body = body.replace(/date=\d+(?=&)/, today);
+  body = body.replace(/created=\d+(?=&)/, now);
   let myRequest = {
     url: url,
     headers: headers,
@@ -113,6 +115,22 @@ function checkIn() {
   return $.http.post(myRequest).then((response) => {
     const body = JSON.parse(response.body);
     return body.m;
+  });
+}
+
+function weChatNotify() {
+  msgs = msgs.replace(/\n/g, "\n\n");
+  const url = `https://sc.ftqq.com/${sckey}.send?text=${encodeURIComponent(
+    $.name
+  )}&desp=${encodeURIComponent(msgs)}`;
+  console.log(url);
+  const headers = "Content-type: application/x-www-form-urlencoded";
+  let scRequest = {
+    url,
+    headers,
+  };
+  $.http.post(scRequest).then((response) => {
+    console.log(response);
   });
 }
 
