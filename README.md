@@ -20,11 +20,15 @@ hostname = wfw.scu.edu.cn
 ## Node.js 使用说明
 
 登录[微服务健康每日报](https://wfw.scu.edu.cn/ncov/wap/default/index)签到并抓包, 没抓过, 自己~抓吧~.
-`npm install` 安装依赖, 初次运行 `node wfw.js` 生成 `微服务打卡.json`, 将抓包所得的 `cookie`、`body` 及其中的 `uid` 按下列格式填入, 配合cron或Task Scheduler自动打卡.
+
+在[这里](http://sc.ftqq.com/3.version)获取ServerChan的sckey, 并绑定微信, 用于将打卡结果推送到微信, 无此需求者留空即可.
+
+`npm install` 安装依赖, 初次运行 `node wfw.js` 生成 `微服务打卡.json`, 将sckey和抓包所得的 `cookie`、`body` 及其中的 `uid` 按下列格式填入, 配合cron或Task Scheduler自动打卡.
 
 ```json
 {
   "uids": ["uid=123456", "uid=654321"],
+  "sckey": "",
   "wfwCookies": "{\"uid=123456\": \"UUkey=...; eai-sess=...\",\"uid=654321\": \"UUkey=...; eai-sess=...\"}",
   "wfwBodies": "{\"uid=123456\": \"sfjxhsjc=1&...&uid=123456bd&...\",\"uid=654321\": \"sfjxhsjc=1&...&uid=654321bd&...\"}"
 }
@@ -51,3 +55,5 @@ hostname = wfw.scu.edu.cn
 [@chavyleung](https://github.com/chavyleung)
 
 & 配合我抓包测试多账号的室友们.
+
+&
