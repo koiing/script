@@ -1,0 +1,30 @@
+{
+  "id": "oOopc.app.sub",
+  "name": "oOopc 应用订阅",
+  "author": "@oOopc",
+  "icon": "https://avatars0.githubusercontent.com/u/74087311?s=400&u=a7f1665d5a9828daa159cda55ff4afeedf5b1c5d&v=4",
+  "repo": "https://github.com/oOopc/script",
+  "apps": [
+    {
+      "id": "wfw",
+      "name": "微服务打卡",
+      "keys": ["@wfw.uids", "@wfw.sckey", "@wfw.cookies", "@wfw.bodies"],
+      "settings": [
+        {
+          "id": "@wfw.sckey",
+          "name": "ServerChan API Key",
+          "val": null,
+          "type": "text",
+          "desc": "请按照repo中教程自行获取"
+        }
+      ],
+      "author": "@oOopc",
+      "repo": "https://github.com/oOopc/script",
+      "icons": [
+        "https://avatars0.githubusercontent.com/u/74087311?s=400&u=a7f1665d5a9828daa159cda55ff4afeedf5b1c5d&v=4",
+        "https://avatars0.githubusercontent.com/u/74087311?s=400&u=a7f1665d5a9828daa159cda55ff4afeedf5b1c5d&v=4"
+      ],
+      "script": "https://raw.githubusercontent.com/oOopc/script/main/wfw/wfw.js"
+    }
+  ]
+}
