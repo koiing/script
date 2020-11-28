@@ -34,5 +34,5 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: npm ci
-      - run: echo "$Authorization" > 微服务打卡.json
-      - run: node wfw.js
+      - run: echo "$Authorization" > ./wfw.json
+      - run: node ./wfw/wfw.js
