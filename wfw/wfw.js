@@ -2,10 +2,12 @@
 微服务健康打卡脚本
 
 【QX 使用说明】
+BoxJs: https://raw.githubusercontent.com/oOopc/script/main/oOopc.boxjs.json
+
 [task_local]
-1 10 * * * https://raw.githubusercontent.com/oOopc/script/main/wfw.js, tag=微服务打卡, enabled=true
+1 10 * * * https://raw.githubusercontent.com/oOopc/script/main/wfw/wfw.js, tag=微服务打卡, enabled=true
 [rewrite_local]
-https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body https://raw.githubusercontent.com/oOopc/script/main/wfw.js
+https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body https://raw.githubusercontent.com/oOopc/script/main/wfw/wfw.js
 [mitm]
 hostname = wfw.scu.edu.cn
 
@@ -40,7 +42,7 @@ if ((isGetCookie = typeof $request != `undefined`)) {
   getCookieBody();
   $.done({});
 } else {
-  !(async () => {
+  (async () => {
     if (!uids[0]) {
       $.notify("微服务打卡", "🔔 请先获取 Cookie!");
       return;
@@ -67,7 +69,6 @@ if ((isGetCookie = typeof $request != `undefined`)) {
     }
     if (!$.env.isNode) console.log(`${msgs}`);
     $.notify("微服务打卡", "", msgs);
-    $.done();
   })()
     .catch((e) => {
       console.log(e);
@@ -105,7 +106,7 @@ function getCookieBody() {
   }
 }
 
-function checkIn() {
+async function checkIn() {
   const url = `https://wfw.scu.edu.cn/ncov/wap/default/save`;
   headers["Cookie"] = cookie;
   body = body.replace(/date=\d+(?=&)/, today);
@@ -121,7 +122,7 @@ function checkIn() {
   });
 }
 
-function weChatNotify() {
+async function weChatNotify() {
   weChatmsgs = msgs.replace(/\n/g, "\n\n");
   const url = `https://sc.ftqq.com/${sckey}.send?text=${encodeURIComponent(
     "微服务打卡"

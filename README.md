@@ -15,7 +15,7 @@ https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body ht
 hostname = wfw.scu.edu.cn
 ```
 
-在BoxJs填写sckey(选填), 手动签到一次获取cookie后禁用重写即可.
+在BoxJs添加订阅: https://raw.githubusercontent.com/oOopc/script/main/oOopc.boxjs.json , 填写sckey(选填), 手动签到一次获取cookie后禁用重写即可.
 
 ## Node.js 使用说明
 
