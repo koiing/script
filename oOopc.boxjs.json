@@ -25,6 +25,35 @@
         "https://avatars0.githubusercontent.com/u/74087311?s=400&u=a7f1665d5a9828daa159cda55ff4afeedf5b1c5d&v=4"
       ],
       "script": "https://raw.githubusercontent.com/oOopc/script/main/wfw/wfw.js"
+    },
+    {
+      "id": "date",
+      "name": "异地恋的约会记录",
+      "keys": ["@date.dates", "@date.mediaImg"],
+      "settings": [
+        {
+          "id": "@date.dates",
+          "name": "约会记录",
+          "val": null,
+          "type": "array",
+          "placeholder": "[[\"2020-12-31-19-19\", \"2021-1-2-18-33\", \"嘻嘻\"], []]",
+          "desc": "必填"
+        },
+        {
+          "id": "@date.mediaImg",
+          "name": "对象",
+          "val": null,
+          "type": "text",
+          "desc": "图片链接"
+        }
+      ],
+      "author": "@oOopc",
+      "repo": "https://github.com/oOopc/script",
+      "icons": [
+        "https://avatars0.githubusercontent.com/u/74087311?s=400&u=a7f1665d5a9828daa159cda55ff4afeedf5b1c5d&v=4",
+        "https://avatars0.githubusercontent.com/u/74087311?s=400&u=a7f1665d5a9828daa159cda55ff4afeedf5b1c5d&v=4"
+      ],
+      "script": "https://raw.githubusercontent.com/oOopc/script/main/date/date.js"
     }
   ]
 }
