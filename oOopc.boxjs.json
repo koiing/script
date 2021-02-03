@@ -54,6 +54,32 @@
         "https://avatars0.githubusercontent.com/u/74087311?s=400&u=a7f1665d5a9828daa159cda55ff4afeedf5b1c5d&v=4"
       ],
       "script": "https://raw.githubusercontent.com/oOopc/script/main/date/date.js"
+    },
+    {
+      "id": "liwo",
+      "name": "梨涡签到领现金",
+      "keys": ["CookieJD", "Body"],
+      "settings": [
+        {
+          "id": "CookieJD",
+          "name": "梨涡 cookie",
+          "val": null,
+          "type": "text"
+        },
+        {
+          "id": "Body",
+          "name": "梨涡 body",
+          "val": null,
+          "type": "text"
+        }
+      ],
+      "author": "@iisams",
+      "repo": "https://github.com/iisams/Scripts",
+      "icons": [
+        "https://raw.githubusercontent.com/iisams/Scripts/master/png/liwoicon.jpg",
+        "https://raw.githubusercontent.com/iisams/Scripts/master/png/liwoicon.jpg"
+      ],
+      "script": "https://raw.githubusercontent.com/iisams/Scripts/master/liwo/7days.js"
     }
   ]
 }

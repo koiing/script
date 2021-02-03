@@ -43,6 +43,7 @@ async function parseDate(date) {
     day: parseInt(start[2]),
     hour: parseInt(start[3]),
     minute: parseInt(start[4]),
+    seconds: parseInt(start[5]),
   };
   end = {
     year: parseInt(end[0]),
@@ -50,6 +51,7 @@ async function parseDate(date) {
     day: parseInt(end[2]),
     hour: parseInt(end[3]),
     minute: parseInt(end[4]),
+    seconds: parseInt(end[5]),
   };
 
   start = new Date(...Object.values(start));
