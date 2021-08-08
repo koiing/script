@@ -15,20 +15,17 @@ https:\/\/wfw\.scu\.edu\.cn\/ncov\/wap\/default\/save url script-request-body ht
 hostname = wfw.scu.edu.cn
 ```
 
-在BoxJs添加订阅: https://raw.githubusercontent.com/oOopc/script/main/oOopc.boxjs.json , 填写sckey(选填), 手动签到一次获取cookie后禁用重写即可.
+在BoxJs添加订阅: [右键复制](https://raw.githubusercontent.com/oOopc/script/main/oOopc.boxjs.json), 手动签到一次获取cookie后禁用重写即可.
 
-## Node.js 使用说明
+## Node.js / QL 使用说明
 
 登录[微服务健康每日报](https://wfw.scu.edu.cn/ncov/wap/default/index)签到并抓取 `https://wfw.scu.edu.cn/ncov/wap/default/save` 的请求头中 `cookie` 和 请求体 `body`. 没抓过, 自己抓吧, 应该在`DevTools` > `Network`? (欢迎抓到的同学pr或issue :hugs:)
 
-在[这里](http://sc.ftqq.com/3.version)获取ServerChan的sckey, 并绑定微信, 用于将打卡结果推送到微信, 无此需求者留空即可.
-
-`npm install` 安装依赖, 初次运行 `node ./wfw/wfw.js` 生成 `wfw.json`, 将sckey和抓包所得的 `cookie`、`body` 及其中的 `uid` 按下列格式填入 `wfw.json`, 配合Github Actions或其它自动化工具自动打卡.
+`npm install` 安装依赖, 初次运行 `node ./wfw/wfw.js` 生成 `wfw.json`, 将抓包所得的 `cookie`、`body` 及其中的 `uid` 按下列格式填入 `wfw.json`, 配合Github Actions或其它自动化工具自动打卡.
 
 ```json
 {
   "uids": ["uid=123456", "uid=654321"],
-  "sckey": "",
   "cookies": "{\"uid=123456\": \"UUkey=...; eai-sess=...\",\"uid=654321\": \"UUkey=...; eai-sess=...\"}",
   "bodies": "{\"uid=123456\": \"sfjxhsjc=1&...&uid=123456bd&...\",\"uid=654321\": \"sfjxhsjc=1&...&uid=654321bd&...\"}"
 }
@@ -61,7 +58,5 @@ hostname = wfw.scu.edu.cn
 [@NobyDa](https://github.com/NobyDa)
 [@chavyleung](https://github.com/chavyleung)
 [@Sunert](https://github.com/Sunert)
-
-& @Sansshen 对声明的修改.
 
 & 配合我抓包测试多账号的室友们.
