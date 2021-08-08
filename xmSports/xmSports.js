@@ -38,15 +38,15 @@ let login_token = "";
 //需要修改的运动步数波动范围，脚本默认修改步数范围为1w8到2w5
 minStep = $.isNode()
   ? process.env.XM_MIN_STEP
-    ? process.env.XM_MIN_STEP
-    : 19000
+    ? process.env.XM_MIN_STEP * 1
+    : 18000
   : $.getdata("xmMinStep")
   ? $.getdata("xmMinStep")
   : 18000;
 
 maxStep = $.isNode()
   ? process.env.XM_MAX_STEP
-    ? process.env.XM_MAX_STEP
+    ? process.env.XM_MAX_STEP * 1
     : 25000
   : $.getdata("xmMaxStep")
   ? $.getdata("xmMaxStep")
