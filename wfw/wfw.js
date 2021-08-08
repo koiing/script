@@ -20,7 +20,7 @@ let uids = $.read("uids") ? $.read("uids") : [];
 let cookies = $.read("cookies") ? JSON.parse($.read("cookies")) : {};
 let bodies = $.read("bodies") ? JSON.parse($.read("bodies")) : {};
 
-const notify = $.isNode() ? require("./sendNotify") : "";
+const notify = $.env.isNode() ? require("./sendNotify") : "";
 
 const date = new Date();
 const today =
