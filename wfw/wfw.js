@@ -65,7 +65,7 @@ if ((isGetCookie = typeof $request != `undefined`)) {
       }
     }
     if ($.env.isNode) {
-      await notify.sendNotify(`SCU 微服务打卡`, `\n${msgs}`);
+      await notify.sendNotify("SCU 微服务打卡", msgs, "", "By oOopc");
     }
     $.notify("微服务打卡", "", msgs);
   })()

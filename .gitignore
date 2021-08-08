@@ -1,6 +1,6 @@
 node_modules/
 date/
-wfw.plugin
+wfw/sendNotify.js
 root.json
 wfw.json
 date.json
