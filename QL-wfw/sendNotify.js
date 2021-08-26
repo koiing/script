@@ -611,9 +611,9 @@ function qywxamNotify(text, desp) {
         timeout,
       };
       $.post(options_accesstoken, (err, resp, data) => {
-        let html = desp.replace(/\n/g, "<br/>");
-        var json = JSON.parse(data);
-        let accesstoken = json.access_token;
+        const html = desp.replace(/\n/g, "<br/>");
+        let json = JSON.parse(data);
+        const accesstoken = json.access_token;
         let options;
 
         switch (QYWX_AM_AY[4]) {
