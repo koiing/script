@@ -4,6 +4,7 @@
   "description": "微服务健康打卡脚本",
   "main": "wfw.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "got": "^11.8.2",
     "request": "^2.88.2"
   },
