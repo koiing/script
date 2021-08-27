@@ -48,6 +48,7 @@ async function main() {
     );
     unlinkSync("./sign.js");
     unlinkSync("./sign.log");
+    unlinkSync("./CookieSet.json");
   } else {
     await notify.sendNotify(`多合一签到`, nobydaScript, "", "\n\n你好，世界！");
   }
