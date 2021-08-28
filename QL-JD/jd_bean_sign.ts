@@ -40,6 +40,7 @@ async function main() {
     let message = readFileSync("./sign.log", "utf-8") + "\r\n";
     const regexp = /【签到号[\s\S]*?\r?\n\r?\n[\s\S]*?\r?\n\r?\n/g;
     message = [...message.matchAll(regexp)].join("");
+    console.log(message);
     await notify.sendNotify(
       "JD签到All in One",
       message,
