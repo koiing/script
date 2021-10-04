@@ -327,7 +327,7 @@ if __name__ == "__main__":
       elif str(step) == '0':
         step = ''
       msg += main(user_list[line], passwd_list[line], step)
-    msg += "别忘了去支付宝 🧀"
+    msg += "<a href=\"https://render.alipay.com/p/s/i/?scheme=alipays%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D60000002\">别忘了去支付宝</a> 🧀"
     if Pm == 'wx':
       push_wx(sckey, msg)
     elif Pm == 'nwx':
