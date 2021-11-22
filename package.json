@@ -5,7 +5,7 @@
   "main": "wfw.js",
   "dependencies": {
     "axios": "^0.21.1",
-    "got": "^11.8.2",
+    "got": "^11.8.3",
     "request": "^2.88.2"
   },
   "devDependencies": {},
