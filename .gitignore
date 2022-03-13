@@ -1,8 +1,8 @@
 node_modules/
 tsconfig.json
 date/
-wfw/sendNotify.js
 root.json
 wfw.json
 date.json
 **/*.jpg
+*.log
