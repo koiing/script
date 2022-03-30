@@ -2,7 +2,7 @@ import os
 from itertools import zip_longest
 
 
-path = "/ql/log/okyyds_yyds_master_jd_get_share_code"
+path = os.environ.get("help_log")
 commands = ["/farm ", "/pet ", "/bean ", "/sgmh "]
 pools = {
     "京东农场": [],
