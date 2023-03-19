@@ -74,9 +74,6 @@ def main(user, passwd, step):
     print("用户名或密码不能为空！")
     return "user and passwd not empty！"
 
-  if step == '':
-    print("已设置为随机步数（16000-16500）")
-    step = str(random.randint(16000, 16500))
   login_token = 0
   login_token, userid = login(user, password)
   if login_token == 0:
@@ -282,30 +279,31 @@ def wxpush(msg, usr, corpid, corpsecret, agentid=1000002):
 if __name__ == "__main__":
   # Push Mode
   Pm = "qwx"
-  if Pm == 'wx' or Pm == 'nwx':
-    # ServerChan
-    sckey = input()
-    if str(sckey) == '0':
-      sckey = ''
-  elif Pm == 'tg':
-    token = input()
-    sl = token.split('@')
-    if len(sl) != 2:
-      print('tg推送参数有误！')
-  elif Pm == 'qwx':
-    token = os.environ["QYWX_AM"]
-    sl = token.split(',')
-    if len(sl) < 3:
-      print('企业微信推送参数有误！')
-  elif Pm == 'pp':
-    token = input()
-    if token == '':
-      print('pushplus token错误')
-  elif Pm == 'off':
-    print('不推送')
-  else:
-    print('推送选项有误！')
-    exit(0)
+
+  match Pm:
+    case 'wx' | 'nwx':
+      sckey = input()
+      if str(sckey) == '0':
+        sckey = ''
+    case 'tg':
+      token = input()
+      sl = token.split('@')
+      if len(sl) != 2:
+        print('tg推送参数有误！')
+    case 'qwx':
+      token = os.environ["QYWX_AM"]
+      sl = token.split(',')
+      if len(sl) < 3:
+        print('企业微信推送参数有误！')
+    case 'pp':
+      token = input()
+      if token == '':
+        print('pushplus token错误')
+    case 'off':
+      print('不推送')
+    case _:
+      print('推送选项有误！')
+      exit(0)
 
   # 用户名（格式为 1**********）
   user = os.environ["xmuser"]
@@ -318,30 +316,36 @@ if __name__ == "__main__":
   passwd_list = passwd.split('#')
   setp_array = step.split('-')
 
-  if len(user_list) == len(passwd_list):
-    msg = ''
-    for line in range(0, len(user_list)):
-      if len(setp_array) == 2:
-        step = str(random.randint(int(setp_array[0]), int(setp_array[1])))
-        print(f"已设置为随机步数（{setp_array[0]}-{setp_array[1]}）")
-      elif str(step) == '0':
-        step = ''
-      msg += main(user_list[line], passwd_list[line], step)
-    msg += "<a href=\"https://render.alipay.com/p/s/i/?scheme=alipays%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D60000002\">别忘了去支付宝</a> 🧀"
-    if Pm == 'wx':
-      push_wx(sckey, msg)
-    elif Pm == 'nwx':
-      push_server(sckey, msg)
-    elif Pm == 'tg':
-      push_tg(sl[0], sl[1], msg)
-    elif Pm == 'qwx':
-      if len(sl) == 4:
-        wxpush(msg, sl[2], sl[0], sl[1], int(sl[3]))
-      else:
-        wxpush(msg, sl[2], sl[0], sl[1])
-    elif Pm == 'pp':
-      push_pushplus(token, msg)
-    elif Pm == 'off':
-      pass
-  else:
+  if len(user_list) != len(passwd_list):
     print('用户名和密码数量不对')
+    exit(0)
+
+  msg = ''
+  for line in range(0, len(user_list)):
+    if len(setp_array) == 2:
+      step = str(random.randint(int(setp_array[0]), int(setp_array[1])) * time.localtime().tm_hour // max(21, time.localtime().tm_hour))
+      print(f"已设置为随机步数（{step}）")
+    else:
+      print("已设置为随机步数（16000-16500）")
+      step = str(random.randint(16000, 16500))
+    msg += main(user_list[line], passwd_list[line], step)
+
+  msg += "<a href=\"https://render.alipay.com/p/s/i/?scheme=alipays%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D60000002\">别忘了去支付宝</a> 🧀"
+
+  if time.localtime().tm_hour >= 21:
+    match Pm:
+      case 'wx':
+        push_wx(sckey, msg)
+      case 'nwx':
+        push_server(sckey, msg)
+      case 'tg':
+        push_tg(sl[0], sl[1], msg)
+      case 'qwx':
+        if len(sl) == 4:
+          wxpush(msg, sl[2], sl[0], sl[1], int(sl[3]))
+        else:
+          wxpush(msg, sl[2], sl[0], sl[1])
+      case 'pp':
+        push_pushplus(token, msg)
+      case 'off':
+        pass

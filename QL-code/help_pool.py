@@ -26,12 +26,11 @@ with open(get_latest_log(path), "r", encoding="utf-8") as f:
     if idx1 > 0 and idx2 > 0 and line[idx1:idx2] in pools.keys():
       pools[line[idx1:idx2]].append(line[idx2 + 1:-1])
 
-i = 0
+size: int = 6
 codes = list(zip_longest(*pools.values(), ""))
 while codes:
-  batches = list(zip(*codes[:5]))
-  codes = codes[5:]
-  i += 1
-  print(f"车队{i}")
+  batches = list(zip(*codes[:size]))
+  codes = codes[size:]
+  print("车队")
   for j in range(4):
     print(commands[j] + "&".join(batches[j]))
