@@ -32,5 +32,5 @@ while codes:
   batches = list(zip(*codes[:size]))
   codes = codes[size:]
   print("车队")
-  for j in range(4):
-    print(commands[j] + "&".join(batches[j]))
+  for i in range(4):
+    print(commands[i] + "&".join([str(j) for j in batches[i]]))
