@@ -323,7 +323,9 @@ if __name__ == "__main__":
   msg = ''
   for line in range(0, len(user_list)):
     if len(setp_array) == 2:
-      step = str(random.randint(int(setp_array[0]), int(setp_array[1])) * time.localtime().tm_hour // max(21, time.localtime().tm_hour))
+      current_hour = time.localtime().tm_hour
+      ratio = (current_hour - 8) // (max(21, current_hour) - 8)
+      step = str(random.randint(int(setp_array[0]), int(setp_array[1])) * ratio)
       print(f"已设置为随机步数（{step}）")
     else:
       print("已设置为随机步数（16000-16500）")
