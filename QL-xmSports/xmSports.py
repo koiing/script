@@ -314,7 +314,7 @@ if __name__ == "__main__":
 
   user_list = user.split('#')
   passwd_list = passwd.split('#')
-  setp_array = step.split('-')
+  step_array = step.split('-')
 
   if len(user_list) != len(passwd_list):
     print('用户名和密码数量不对')
@@ -322,10 +322,10 @@ if __name__ == "__main__":
 
   msg = ''
   for line in range(0, len(user_list)):
-    if len(setp_array) == 2:
+    if len(step_array) == 2:
       current_hour = time.localtime().tm_hour
-      ratio = (current_hour - 8) // (max(21, current_hour) - 8)
-      step = str(random.randint(int(setp_array[0]), int(setp_array[1])) * ratio)
+      base = random.randint(int(step_array[0]), int(step_array[1]))
+      step = str(base * (current_hour - 8) // (max(21, current_hour) - 8))
       print(f"已设置为随机步数（{step}）")
     else:
       print("已设置为随机步数（16000-16500）")
